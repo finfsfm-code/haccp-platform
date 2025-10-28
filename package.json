@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Food Safety HACCP Platform Desktop Application",
   "main": "main.js",
-  "homepage": "https://finfsfm-code.github.io/haccp-platform/",
   "scripts": {
     "build": "tsc && vite build",
     "start": "npm run build && electron .",
@@ -39,9 +38,11 @@
     "win": {
       "target": "nsis"
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+    "linux": {
+      "target": "AppImage"
+    },
+    "mac": {
+      "target": "dmg"
     }
   }
 }
