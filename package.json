@@ -1,0 +1,44 @@
+{
+  "name": "haccp-platform",
+  "version": "1.0.0",
+  "description": "Food Safety HACCP Platform Desktop Application",
+  "main": "main.js",
+  "homepage": "./",
+  "scripts": {
+    "build": "tsc && vite build",
+    "start": "npm run build && electron .",
+    "dist": "npm run build && electron-builder",
+    "dev": "vite --host localhost --port 3000"
+  },
+  "dependencies": {
+    "@google/genai": "^1.21.0",
+    "chart.js": "^4.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3"
+  },
+  "build": {
+    "appId": "com.foodsafety.haccpplatform",
+    "productName": "Food Safety HACCP Platform",
+    "files": [
+      "dist/",
+      "main.js",
+      "preload.js"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

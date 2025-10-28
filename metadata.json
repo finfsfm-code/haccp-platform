@@ -1,0 +1,5 @@
+{
+  "name": "HACCP Plan Generator",
+  "description": "A web platform to create a comprehensive HACCP (Hazard Analysis and Critical Control Points) system for the food industry by inputting company, product, supplier, and team data to automatically generate a complete plan.",
+  "requestFramePermissions": []
+}
