@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "Food Safety HACCP Platform Desktop Application",
   "main": "main.js",
-  "homepage": "./",
+  "homepage": "https://finfsfm-code.github.io/haccp-platform/",
   "scripts": {
     "build": "tsc && vite build",
     "start": "npm run build && electron .",
     "dist": "npm run build && electron-builder",
-    "dev": "vite --host localhost --port 3000"
+    "dev": "vite --host localhost --port 3000",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d dist" 
   },
   "dependencies": {
     "@google/genai": "^1.21.0",
@@ -22,6 +24,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "electron": "^28.3.3",
     "electron-builder": "^24.13.3",
+    "gh-pages": "^6.3.0",
     "typescript": "^5.5.3",
     "vite": "^5.3.3"
   },

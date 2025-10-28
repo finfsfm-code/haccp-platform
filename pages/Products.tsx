@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 // FIX: Added .tsx extension to resolve module.
 import { useAppContext } from '../context/AppContext.tsx';
@@ -166,19 +164,35 @@ const Products: React.FC = () => {
         setCurrentProductData(p => ({ ...p, [field]: value }));
     };
 
-    // FIX: Correctly update nested state for `servingMethod` in a type-safe way to resolve incorrect type inference for the state update, and ensure all required properties are present.
+    // FIX: Correctly update nested state for `servingMethod` in a type-safe way to resolve incorrect type inference for the state update, and ensure all required properties are present without causing TS2783 duplicate key errors.
     const handleNestedChange = (section: 'servingMethod', field: keyof ServingMethod, value: any) => {
-        setCurrentProductData(p => ({
-            ...p,
-            [section]: {
-                // Provide defaults for all required fields to satisfy the ServingMethod type
-                packaging: p[section]?.packaging ?? '',
-                servingCondition: p[section]?.servingCondition ?? 'immediate',
-                requiresExpiryPrinting: p[section]?.requiresExpiryPrinting ?? false,
-                ...p[section], // Spread existing values, overwriting defaults
-                [field]: value, // Apply the new change
-            }
-        }));
+        setCurrentProductData(p => {
+            const existingMethod = p[section] || {};
+            
+            // Destructure the existing fields we check defaults for, and capture the rest
+            const { 
+                packaging, 
+                servingCondition, 
+                requiresExpiryPrinting, 
+                ...restOfMethod 
+            } = existingMethod; 
+
+            return ({
+                ...p,
+                [section]: {
+                    // Spread the remaining fields first (hotHoldingTemperature, coldHoldingTemperature)
+                    ...restOfMethod, 
+                    
+                    // Explicitly define the three fields, using existing value or default (no conflict)
+                    packaging: packaging ?? '',
+                    servingCondition: servingCondition ?? 'immediate',
+                    requiresExpiryPrinting: requiresExpiryPrinting ?? false,
+                    
+                    // Apply the new change
+                    [field]: value, 
+                }
+            });
+        });
     };
 
     const handleIngredientChange = (index: number, field: keyof Omit<Ingredient, 'id'>, value: string | number) => {
