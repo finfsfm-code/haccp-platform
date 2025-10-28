@@ -5,28 +5,363 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة نظام الهاسب (HACCP)</title>
     <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
-            color: white;
-            text-align: center;
-            padding: 50px;
+        /* الأنماط العامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .container {
-            max-width: 600px;
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* رأس الصفحة */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            color: #1e3a8a;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #1e3a8a;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #10b981;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero {
+            max-width: 800px;
             margin: 0 auto;
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
             border-radius: 15px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, background 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .feature-card p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        /* تذييل الصفحة */
+        .footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+        }
+        
+        /* الأزرار */
+        .btn {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: #0da271;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1e3a8a;
+        }
+        
+        /* رسالة التحميل */
+        .loading {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        /* التجاوب مع الشاشات المختلفة */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .hero {
+                padding: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>مرحباً بكم في منصة الهاسب</h1>
-        <p>التطبيق يعمل بنجاح على GitHub Pages!</p>
-        <p>سيتم تحميل الواجهة الرئيسية قريباً...</p>
-    </div>
+    <div id="root"></div>
+
+    <!-- مكتبات React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel لتحويل JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- التطبيق -->
+    <script type="text/babel">
+        // سياق التطبيق (AppContext)
+        const AppContext = React.createContext();
+        
+        // مزود السياق
+        const AppProvider = ({ children }) => {
+            const [appState, setAppState] = React.useState({
+                message: 'مرحباً بكم في منصة الهاسب (HACCP)',
+                description: 'نظام تحليل المخاطر ونقاط التحكم الحرجة',
+                features: [
+                    {
+                        title: 'إدارة المخاطر',
+                        description: 'تحديد وتقييم المخاطر المحتملة في عمليات التصنيع الغذائي'
+                    },
+                    {
+                        title: 'نقاط التحكم الحرجة',
+                        description: 'مراقبة النقاط الحرجة في العملية لضمان سلامة الغذاء'
+                    },
+                    {
+                        title: 'التوثيق والمتابعة',
+                        description: 'نظام متكامل لتوثيق البيانات ومتابعة التنفيذ'
+                    }
+                ],
+                loading: true
+            });
+            
+            // محاكاة تحميل البيانات
+            React.useEffect(() => {
+                const timer = setTimeout(() => {
+                    setAppState(prev => ({
+                        ...prev,
+                        loading: false
+                    }));
+                }, 2000);
+                
+                return () => clearTimeout(timer);
+            }, []);
+            
+            return React.createElement(
+                AppContext.Provider,
+                { value: { appState, setAppState } },
+                children
+            );
+        };
+
+        // مكون الرأس
+        const Header = () => {
+            return React.createElement(
+                'header',
+                { className: 'header' },
+                React.createElement(
+                    'div',
+                    { className: 'logo' },
+                    React.createElement('h1', null, 'نظام الهاسب (HACCP)')
+                ),
+                React.createElement(
+                    'nav',
+                    { className: 'nav-links' },
+                    React.createElement('a', { href: '#about' }, 'عن المنصة'),
+                    React.createElement('a', { href: '#features' }, 'المميزات'),
+                    React.createElement('a', { href: '#contact' }, 'اتصل بنا')
+                )
+            );
+        };
+
+        // مكون المحتوى الرئيسي
+        const MainContent = () => {
+            const { appState } = React.useContext(AppContext);
+            
+            return React.createElement(
+                'main',
+                { className: 'main-content' },
+                React.createElement(
+                    'div',
+                    { className: 'hero' },
+                    React.createElement('h1', null, appState.message),
+                    React.createElement('p', null, appState.description),
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('a', { 
+                            href: '#login', 
+                            className: 'btn' 
+                        }, 'تسجيل الدخول'),
+                        React.createElement('a', { 
+                            href: '#register', 
+                            className: 'btn btn-outline' 
+                        }, 'إنشاء حساب')
+                    ),
+                    appState.loading && 
+                    React.createElement(
+                        'div',
+                        { className: 'loading' },
+                        'جاري تحميل الواجهة الرئيسية...'
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'features' },
+                    appState.features.map((feature, index) => 
+                        React.createElement(
+                            'div',
+                            { key: index, className: 'feature-card' },
+                            React.createElement('h3', null, feature.title),
+                            React.createElement('p', null, feature.description)
+                        )
+                    )
+                )
+            );
+        };
+
+        // مكون التذييل
+        const Footer = () => {
+            return React.createElement(
+                'footer',
+                { className: 'footer' },
+                React.createElement('p', null, '© 2023 منصة نظام الهاسب (HACCP). جميع الحقوق محفوظة.')
+            );
+        };
+
+        // المكون الرئيسي
+        const App = () => {
+            return React.createElement(
+                React.Fragment,
+                null,
+                React.createElement(Header),
+                React.createElement(MainContent),
+                React.createElement(Footer)
+            );
+        };
+
+        // تهيئة التطبيق
+        const rootElement = document.getElementById('root');
+        if (!rootElement) {
+            throw new Error("Could not find root element to mount to");
+        }
+
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(
+            React.createElement(React.StrictMode, null,
+                React.createElement(AppProvider, null,
+                    React.createElement(App)
+                )
+            )
+        );
+    </script>
 </body>
 </html>
