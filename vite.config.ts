@@ -1,13 +1,9 @@
 // vite.config.ts
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// اسم المستودع هو 'haccp-platform' كما يظهر في الرابط
-const REPO_NAME = 'haccp-platform';
-
+// تحديد مسار النشر الفرعي لـ GitHub Pages. يجب أن يطابق اسم المستودع.
 export default defineConfig({
-  // **هذا هو الإعداد الرئيسي لحل مشكلة 404:**
-  base: `/${REPO_NAME}/`,
+  base: '/haccp-platform/',
   plugins: [react()],
 });
